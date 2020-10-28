@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html xmlns:th="//www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>有給休暇管理システム</title>
+<link href="css/style.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+	<div id="header">
+		<h1>有給休暇管理システム</h1>
+		<form th:action="@{/menu}"  th:ob method="post">
+			<input class="head-btn1" type="submit" name="backList" value="TopPage" />   
+			<input class="head-btn2" type="submit" name="logout" value="Logout" />   
+		</form>
+	</div>
+	<h2>管理者権限変更画面</h2>
+	<br>
+	<p class="message">管理者権限を変更する方の名前または部署名を入力してください</p><br>
+	<form th:action="@{/authority-serch}" th:object="${authoritySerchForm}" method="post" >
+		
+		
+		<table class="serch">
+			<tr>
+				<th>社員名</th>
+				<th><input type="text" th:field="*{employeeName}" placeholder="社員名" />
+				<th>部署ID</th>
+				<th><input type="text" th:field="*{departmentId}" placeholder="部署名" />
+		</table>
+		
+		<div style="text-align: center;">
+			<br>
+			<input class="normal-btn" type="submit" name="authoritySerch" value="検索" /><br>
+		</div>
+		
+		<br><hr /><br>
+		
+		<p th:errors="*{all}" class="error-message"/><br>
+		
+	</form>
+	
+	<p class="detail-outhority">
+	 		【管理者権限一覧】<br>
+			<strong> 1</strong> ： 個人の情報のみ閲覧可能<br>
+			<strong> 2</strong> ： 社員全員の情報が閲覧可能<br>
+			<strong> 3</strong> ： 2の権限と管理者権限の変更が可能<br>
+	</p>
+	
+	
+	<div th:if="${employee} and ${employee.size()} == 0">
+		<br>
+	 	<p class="message">検索条件に該当する社員情報はありませんでした。</p>
+	</div>
+	<div th:if="${employee} and ${employee.size()} > 0">
+	 	
+	 	
+	 	
+	 	
+	 	<table id="list-authority" border="1">
+	 		<tr>
+	 			<th >社員番号</th>
+	 			<th >社員名</th>
+	 			<th >権限</th>
+	 			<th ></th>
+	 		</tr>
+	 		
+	 		<form th:action="@{/authority-serch-end}" th:object="${authoritySerchForm}" method="post">
+	 		<tr th:each="employee : ${employee}">
+		 			<td th:text="${employee.employeeNo}"></td>
+		 			<td th:text="${employee.employeeName}"></td>
+		 			<td>
+		 				<select th:value="*{authority}" name="authority" id="authority">
+		 					<span th:if="${employee.authority}==1">
+		 						<option th:value="1" selected>1</option>
+		 						<option th:value="2" >2</option>
+		 						<option th:value="3">3</option>
+		 					</span>
+		 					<span th:if="${employee.authority}==2">
+		 						<option th:value="2" selected>2</option>
+		 						<option th:value="1" >1</option>
+		 						<option th:value="3" >3</option>
+		 					</span>
+		 					<span th:if="${employee.authority}==3">
+		 						<option th:value="1" >1</option>
+		 						<option th:value="2" >2</option>
+		 						<option th:value="3" selected>3</option>
+		 					</span>
+		 				</select>
+		 			</td>
+	 			
+	 				
+	 				
+	 				<td>
+	 					<input type="checkbox" th:date-name="*{authority}" th:value="${employee.employeeNo}" name="check" />
+	 				</td>
+	 				
+	 		</tr>
+	 	</table>
+	 	<br>
+	 	<div style="text-align: center;">
+			<input class="normal-btn" type="submit" name="authorityEnd" value="変更" />
+		</div>
+	</form>
+	</div>
+
+</body>
+</html>

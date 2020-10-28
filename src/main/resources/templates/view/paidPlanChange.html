@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="//www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="css/style.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&display=swap" rel="stylesheet">
+<title>有給休暇管理システム</title>
+</head>
+<body> 
+	<div id="header">
+		<h1>有給休暇管理システム</h1>
+		<form th:action="@{/menu}"  th:ob method="post">
+			<input class="head-btn1" type="submit" name="backList" value="TopPage" />   
+			<input class="head-btn2" type="submit" name="logout" value="Logout" />   
+		</form>
+	</div>
+	<h2>有給計画変更画面</h2><br>
+	
+	<p class="message">赤枠の計画を修正してください</p>
+	<form th:object="${paidRevisionForm}" method="post">
+		<p th:errors="*{all}" class="error-message"/>
+	</form>
+	<br>
+	
+	<table id="list" border="1">
+		<thead>
+			<tr>
+				<th rowspan="2">社員番号</th>
+				<th rowspan="2">氏名</th>
+				<th rowspan="2"></th>
+				<th colspan="5">必須</th>
+				<th colspan="2">任意</th>
+			</tr>
+			<tr>		
+				<th th:each="i:${#numbers.sequence(1,7)}" th:value="${i}" th:text="${i}" />
+			</tr>
+		</thead>
+		<tbody>
+			<span th:each="employee : ${employeeList}">
+		 	
+				<tr>
+					<td rowspan="2" th:text="${employee.employeeNo}"></td>
+					<td rowspan="2" th:text="${employee.employeeName}"></td>
+					<td>計画</td>
+	
+					<form th:action="@{/paid-change-conf}" th:object="${paidRevisionForm}" method="post" >
+					
+					<td th:each="paid : ${paidList}">
+						<input type="date" min="2020-04-01" max="2021-03-31" th:value="${paid.paidPlanDate}" name="paidPlanDate" id="paidPlanDate" />
+						<input type="hidden" th:value="${paid.paidId}" name="paidId" />
+					</td>
+	
+				</tr>
+				<tr>
+					<td>実績</td>
+					<td th:each="paid : ${paidList}" th:text="${paid.paidAchiveDate}"></td>
+				</tr>
+				
+			</span> 
+		</tbody>
+	</table>
+	
+<br>
+
+<div style="text-align: center;">
+	<input  class="normal-btn" type="submit" name="paidConf" value="確認" />
+</div>
+
+<span th:each="employee : ${employeeList}">
+	<input type="hidden"  th:value="${employee.employeeId}" name="employeeId" />
+</span>
+
+</form>
+
+</body>
+</html>

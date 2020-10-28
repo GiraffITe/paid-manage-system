@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="//www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="css/style.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&display=swap" rel="stylesheet">
+<title>有給休暇管理システム</title>
+</head>
+<body id="back">
+	<div id="header">
+		<h1>有給休暇管理システム</h1>
+	</div>
+	<div id="login">
+		<h2>LOGIN</h2>
+		<form th:action="@{/paid-list-page}" th:object="${accountForm}" method="post">
+			<p th:errors="*{all}" class="error-message"/>
+		
+			<table id="login-box">
+				<tr>
+					<th class="login"><input type="text" style="width:200px;font-size:20px;height:30px;" th:field="*{employeeNo}" maxlength="10" th:errorclass="error-imput" placeholder="社員番号" /></th>
+				</tr>
+				<tr>
+					<th class="login"><input type="password"  style="width:200px;font-size:20px;height:30px;"  th:field="*{employeePass}" maxlength="20" th:errorclass="error-imput" placeholder="パスワード"  /></th>
+				</tr>
+			</table>
+			<input class="button" type="submit" name="login" value="ログイン" >
+		</form>
+	</div>
+</body>	
+</html>

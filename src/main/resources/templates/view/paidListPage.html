@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="//www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="css/style.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&display=swap" rel="stylesheet">
+<title>有給休暇管理システム</title>
+</head>
+<body>
+	<div id="header">
+		<h1>有給休暇管理システム</h1>
+		<form th:action="@{/menu}"  th:ob method="post">
+			<input class="head-btn1" type="submit" name="backList" value="TopPage" />   
+			<input class="head-btn2" type="submit" name="logout" value="Logout" />   
+		</form>
+	</div>
+	
+	<h2>有給休暇計画実績リスト</h2>
+	
+	<p class="detail">
+		<strong>取得日数</strong> ： 今年度取得した有給休暇日数<br>
+		<strong>取得率</strong> ： 取得日数 ÷ 法定取得最低日数（5日）<br>
+		<strong>進捗率</strong> ： 経過計画日数 ÷ 取得日数<br>
+		※経過計画日数は本日より過去の有給計画日の日数
+	</p>
+	
+	<aside class="sideber">
+		<form th:action="@{/next-action}" method="post">
+			<span th:if="${authority} == 3">
+				<input class="body-btn1" type="submit" name="authority" value="管理区分変更" />
+			</span>
+			<input class="body-btn1" type="submit" name="calendar" value="カレンダー"	/>
+		</form>
+	</aside>
+	
+	<table id="list" border="1">
+		<thead>
+			<tr>
+				<th rowspan="2">社員番号</th>
+				<th rowspan="2">氏名</th>
+				<th rowspan="2"></th>
+				<th colspan="5">必須</th>
+				<th colspan="2">任意</th>
+				<th rowspan="2">取得日数</th>
+				<th rowspan="2">取得率</th>
+				<th rowspan="2">進捗率</th>
+				<th rowspan="2"></th>
+			</tr>
+			<tr>		
+				<th th:each="i:${#numbers.sequence(1,7)}" th:value="${i}" th:text="${i}" />
+			</tr>
+		</thead>
+		<tbody>
+			<span th:each="employee : ${employeeList}">
+			<tr>
+				<td rowspan="2" th:text="${employee.employeeNo}"></td>
+				<td rowspan="2" th:text="${employee.employeeName}"></td>
+				<td >計画</td>
+				<td th:each="paid : ${paidList}" th:if="${paid.employeeId} == ${employee.employeeId}" th:text="${paid.paidPlanDate}"></td>
+				<td rowspan="2" th:text="*{employee.acquisitionDays}+'日' "></td>
+				<td rowspan="2" th:text="*{employee.rateAll}+'%'"></td>
+				<td rowspan="2"  th:text="*{employee.ratePlan}+'%'"></td>
+				<form th:action="@{/plan-revision}" method="post">
+					<td rowspan="2">
+						<input class="normal-btn" type="submit" value="修正" name="revision" />
+						<input type="hidden"  th:value="*{employee.employeeId}" name="employeeId" />
+					</td>
+				</form>	
+			</tr>
+			<tr>
+				<td>実績</td>
+				<td th:each="paidList : ${paidList}" th:if="${paidList.employeeId} == ${employee.employeeId}" th:text="${paidList.paidAchiveDate}"></td>
+			</tr>
+			</span>
+		</tbody>
+	</table>
+	
+	
+</body>
+</html>

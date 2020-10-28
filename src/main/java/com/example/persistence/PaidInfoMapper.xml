@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.persistence.PaidInfoMapper">
+    <select id="selectPaidInfo" resultType="com.example.domain.PaidInfo">
+        SELECT employee_id,paid_plan_date,paid_achive_date,paid_id FROM paid
+        <where>
+			employee_id = #{employeeId}
+        </where> 
+    </select>
+    <update id="updatePaidPlan">
+    	UPDATE paid SET paid_plan_date = #{paidPlanDate}
+    	<where>
+    		paid_id = #{paidId}
+    	</where>
+    </update> 
+</mapper>

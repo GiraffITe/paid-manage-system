@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="//www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="css/style.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&display=swap" rel="stylesheet">
+<title>有給休暇管理システム</title>
+</head>
+<body> 
+	<div id="header">
+		<h1>有給休暇管理システム</h1>
+		<form th:action="@{/menu}"  th:ob method="post">
+			<input class="head-btn1" type="submit" name="backList" value="TopPage" />   
+			<input class="head-btn2" type="submit" name="logout" value="Logout" />   
+		</form>
+	</div>
+	<h2>有給計画変更完了画面</h2>
+	<div style="text-align: center;">
+		<img src="../image/complete.png"width="400" height="210" />
+	</div>
+	<p class="message">有給計画を変更しました</p>
+	
+	
+	<form th:action="@{/next-action}" method="post">
+		<div style="text-align: center;">
+			<input class="body-btn1" type="submit" name="calendar" value="カレンダー" />
+		</div>
+	</form>
+	
+
+</body>
+</html>

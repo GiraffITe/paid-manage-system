@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>有給休暇管理システム</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="css/style.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&display=swap" rel="stylesheet">
+<link rel='stylesheet' href='webjars/fullcalendar/3.5.1/dist/fullcalendar.css' />
+<script src="webjars/jquery/2.0.3/jquery.min.js"></script>
+<script src='webjars/moment/2.19.1/min/moment.min.js'></script>
+<script src='webjars/fullcalendar/3.5.1/dist/fullcalendar.js'></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+      },
+      locale: 'ja',
+      navLinks: true, // can click day/week names to navigate views
+      businessHours: true, // display business hours
+      editable: true,
+      selectable: true
+    });
+    calendar.render();
+});
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#calendar').fullCalendar({
+			header: {
+	            left: '',
+	            center: 'title',
+	            right: 'prev,next today',
+	        },
+	        buttonText: {
+	            today:    '今日',
+	            month:    '月',
+	            week:     '週',
+	            day:      '日'
+	        },
+	        monthNames: ['1．', '2．', '3．', '4．', '5．', '6．', '7．', '8．', '9．', '10．', '11．', '12．'],
+			dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+		    events: {
+			   url : '/api/event/all'
+			}
+		});
+	});
+</script>
+<style>
+
+  #calendar {
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top:20px;
+  }
+
+</style>
+</head>
+<body>
+
+	<div id="header">
+		<h1>有給休暇管理システム</h1>
+		<form th:action="@{/menu}"  th:ob method="post">
+			<input class="head-btn1" type="submit" name="backList" value="TopPage" />   
+			<input class="head-btn2" type="submit" name="logout" value="Logout" />   
+		</form>
+	</div>
+
+  <div id='calendar'></div>
+</body>
+</html>

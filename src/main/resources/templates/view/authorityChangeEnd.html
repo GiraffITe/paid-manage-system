@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="//www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="css/style.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&display=swap" rel="stylesheet">
+
+<title>有給休暇管理システム</title>
+</head>
+<body>
+	<div id="header">
+		<h1>有給休暇管理システム</h1>
+		<form th:action="@{/menu}"  th:ob method="post">
+			<input class="head-btn1" type="submit" name="backList" value="TopPage" />   
+			<input class="head-btn2" type="submit" name="logout" value="Logout" />   
+		</form>
+	</div>
+	<h2>管理者変更完了画面</h2><br>
+	<form th:action="@{/authority-change-end}" th:object="${authoritySerchForm}" method="post" >
+	
+		<table id="list-authority" border="1">
+			<tr>
+	 			<th >社員名</th>
+	 			<th >権限</th>
+	 		</tr>
+	 		
+	 		<tr th:each="employee : ${employeeList}">
+	 			
+	 			<td th:text="${employee.employeeName}"></td>
+	 			<td class="red" th:text="${employee.authority}"></td>
+	 		
+	 		</tr>
+		</table> <br>
+		
+		<p class="message">管理区分の変更を完了しました</p><br>
+		
+		<div style="text-align: center;">
+			<input class="normal-btn" type="submit" name="backConf" value="戻る" />
+		</div>
+	
+	</form>
+
+</body>
+</html>

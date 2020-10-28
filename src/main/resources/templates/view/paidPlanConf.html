@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="//www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="css/style.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&display=swap" rel="stylesheet">
+<title>有給休暇管理システム</title>
+</head>
+<body> 
+	<div id="header">
+		<h1>有給休暇管理システム</h1>
+		<form th:action="@{/menu}"  th:ob method="post">
+			<input class="head-btn1" type="submit" name="backList" value="TopPage" />   
+			<input class="head-btn2" type="submit" name="logout" value="Logout" />   
+		</form>
+	</div>
+	<h2>有給計画変更画面</h2><br>
+	<p class="message">修正内容を確認してください</p><br>
+	<form th:action="@{/paid-conf}" th:object="${paidRevisionForm}" method="post">
+		<table id="list" border="1">
+			<tr>
+				<th rowspan="2">社員番号</th>
+				<th rowspan="2">氏名</th>
+				<th rowspan="2"></th>
+				<th colspan="5">必須</th>
+				<th colspan="2">任意</th>
+			</tr>
+			<tr>		
+				<th th:each="i:${#numbers.sequence(1,7)}" th:value="${i}" th:text="${i}" />
+			</tr>
+		
+			<span th:each="employee : ${employeeList}">
+			<tr>
+				<td rowspan="2" th:text="${employee.employeeNo}"></td>
+				<td rowspan="2" th:text="${employee.employeeName}"></td>
+				<td>計画</td>
+				<span th:each="planDate : ${planDates}" >
+					<td class="red" th:text="${planDate}"></td>
+				</span>
+			</tr>
+			<tr>
+				<td>実績</td>
+				<td th:each="paid : ${paidList}" th:text="${paid.paidAchiveDate}"></th>
+			</tr>
+			</span>
+		</table>
+		
+		<br>
+		
+		<span th:each="employee : ${employeeList}">
+		<div style="text-align: center;">
+			<input class="normal-btn" type="submit" name="backRevision" value="戻る" />
+			<input type="hidden" name="employeeId" th:value="${employee.employeeId}" />
+		</span>
+			<input class="normal-btn" type="submit" name="paidPlanEnd" value="変更" />
+		</div>
+	</form>
+	
+</body>
+</html>

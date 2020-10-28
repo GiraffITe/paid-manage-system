@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.persistence.EmployeeInfoMapper">
+
+    <select id="selectEmployeeInfo" resultType="com.example.domain.EmployeeInfo">
+        SELECT employee_id,employee_no,employee_pass,employee_name,department_id,authority FROM employee
+        <where>
+        	employee_no = #{employeeNo}
+        </where> 
+    </select>
+    
+    <select id="selectEmployeeInfoId" resultType="com.example.domain.EmployeeInfo">
+        SELECT employee_id,employee_no,employee_pass,employee_name,department_id,authority FROM employee
+        <where>
+        	employee_id = #{employeeId}
+        </where> 
+    </select>
+    
+    <select id="selectEmployeeInfoAll" resultType="com.example.domain.EmployeeInfo">
+        SELECT employee_id,employee_no,employee_name FROM employee
+    </select>
+    
+    <select id="selectEmployeeInfoEmployeeName" resultType="com.example.domain.EmployeeInfo">
+    	SELECT employee_no,employee_name,authority FROM employee
+    	<where>
+    		employee_name = #{employeeName}
+    	</where>
+    </select>
+    
+    <select id="selectEmployeeInfoDepartmentId" resultType="com.example.domain.EmployeeInfo">
+    	SELECT employee_no,employee_name,authority FROM employee
+    	<where>
+    		department_id = #{departmentId}
+    	</where>
+    </select>
+    
+    <update id="updateAuthority">
+    	UPDATE employee SET authority=#{authority}
+    	<where>
+    		employee_no = #{employeeNo}
+    	</where>
+    </update> 
+    
+    <update id="updateAuthorityEmployeeName">
+    	UPDATE employee SET authority=#{authority}
+    	<where>
+    		employee_name = #{employeeName}
+    	</where>
+    </update> 
+    	
+</mapper>
